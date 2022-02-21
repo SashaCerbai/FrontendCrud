@@ -22,6 +22,7 @@
                 <td></td>
                 <td></td>
                 <td><button id="modal-btn" class="button">Aggiungi</button></td>
+                <td><button id="modal-btn2" class="button">Modifica</button></td>
             </tr>
         </table>
         <br>
@@ -82,6 +83,54 @@
         </div>
     </div>
 
+    <div id="myModalChange" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-container">
+                <h1 class="header">Modifica dipendente</h1>
+                <br>
+
+                <table class="modal-table">
+                    <tbody class="modal-body">
+                        <tr>
+                            <td><label>Id</label></td>
+                            <td><input type="number" id="id" min="10000"></td>
+                        </tr>
+                        <tr>
+                            <td><label>Nome</label></td>
+                            <td><input type="text" id="name"></td>
+                        </tr>
+                        <tr>
+                            <td><label>Cognome</label></td>
+                            <td><input type="text" id="lastname"></td>
+                        </tr>
+                        <tr>
+                            <td><label>Data di nascita</label></td>
+                            <td><input type="date" id="birthday"></td>
+                        </tr>
+                        <tr>
+                            <td><label>Data di assunzione</label></td>
+                            <td><input type="date" id="hiring-date"></td>
+                        </tr>
+                        <tr class="radio-row">
+                            <td><label>Sesso</label></td>
+                            <td class="radio-container">
+                                <input type="radio" name="gender" id="gender" value="M" class="m-radio" checked>
+                                <input type="radio" name="gender" id="gender" value="F" class="f-radio">
+                            </td>
+                        </tr>
+                        <tr>
+                        </tr>
+                        <td colspan="2" class="" radio-container><button class="modal-button" onclick="modifyEmployee(); emptyModalInputs();">Invia &gg;</button></td>
+                    </tbody>
+                </table>
+                <br>
+            </div>
+        </div>
+    </div>
+
+
 </body>
 <script>
     var modal = document.getElementById("myModal");
@@ -100,5 +149,24 @@
         }
     }
 </script>
+
+<script>
+    var modal = document.getElementById("myModalChange");
+    var btn = document.getElementById("modal-btn2");
+    var span = document.getElementsByClassName("close")[0];
+
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+
 
 </html>

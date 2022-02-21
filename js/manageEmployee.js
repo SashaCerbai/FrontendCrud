@@ -64,7 +64,7 @@ function updateEmployees() {
         rows += "<td>" + value.id + "</td>";
         rows += "<td>" + value.firstName + "</td>";
         rows += "<td>" + value.lastName + "</td>";
-        rows += "<td>" + "<button class='delete-button' onclick='removeEmployee(" + value.id + "); updateEmployees();'>Cancella</button>" + "</td>";
+        rows += "<td>" + "<button class='delete-button' onclick='removeEmployee(" + value.id + "); updateEmployees();'>Cancella</button>" + "</td>";  
         rows += "</tr>";
         cls = "";
     });
@@ -75,14 +75,32 @@ function removeEmployee(id) {
     let i = 0;
     $.each(data, function(key, value) {
         if (value.id == id) {
-            data.splice(i, 1);
+            data.splice(i,1);
         }
         i++;
     })
 }
 
+function modifyEmployee(id){
+    let i = 0;
+    $.each(data, function(key, value) {
+        if (value.id == id) {
+            changeEmployee(
+                $("#id").val(),
+                $("#name").val().trim(),
+                $("#lastname").val().trim(),
+                $("#birthday").val(),
+                $("#hiring-date").val(),
+                $("#gender").val()
+            );
+            updateEmployees();
+        }
+        i++;
+    })
+}
 
 function addEmployee(name, lastname, birth, hiredate, gender) {
+    data.
     data.push({
         "id": nextId,
         "birthDate": birth,
@@ -94,6 +112,16 @@ function addEmployee(name, lastname, birth, hiredate, gender) {
     nextId++;
 }
 
+function changeEmployee(id, name, lastname, birth, hiredate, gender) {
+   
+        "id"=id;
+        "birthDate"= birth;
+        "firstName"= name;
+        "lastName"=lastname;
+        "gender"= gender;
+        "hireDate"= hiredate;
+   
+}
 function saveModalInputs() {
     addEmployee(
         $("#name").val().trim(),
