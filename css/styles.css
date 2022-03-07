@@ -126,7 +126,7 @@ body {
 /* Modal Content/Box */
 
 .modal-content {
-    background-color: #fefefe;
+    background-color: aquamarine;
     margin: 15% auto;
     /* 15% from the top and centered */
     padding: 0px;
@@ -194,11 +194,6 @@ label {
     margin-right: 5px;
 }
 
-.save-button:hover{
-    transform: translateY(-5px);
-    box-shadow: 0px 9px #080;
-}
-
 .save-button:active{
     transform: translateY(3px);
     box-shadow: 0px 1px #555;
@@ -219,10 +214,6 @@ label {
     margin-right: 5px;
 }
 
-.change-button:hover{
-    transform: translateY(-5px);
-    box-shadow: 0px 9px #008dc5;
-}
 
 .change-button:active{
     transform: translateY(3px);

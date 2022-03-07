@@ -51,14 +51,14 @@ function updateNextId(){
   });
 }
 
-//rubato da stackoverflow
-/*function countProps(obj) {
+//stackoverflow
+function countProps(obj) {
   var count = 0;
   for (var p in obj) {
     obj.hasOwnProperty(p) && count++;
   }
   return count; 
-} */
+}
 
 function updateEmployees() {
     var rows = "";

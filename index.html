@@ -42,11 +42,11 @@
     </div>
     <br>
     <center>
-        <button onclick="loadFirstPage()" class="paging-button"> First </button>
-        <button onclick="loadPreviousPage()" id = "prev-button" class="paging-button"> Previous </button>
-        <button class="paging-button" id="page-counter"> 1 </button>
-        <button onclick="loadNextPage()" class="paging-button"> Next </button>
-        <button onclick="loadLastPage()" class="paging-button"> Last </button>
+        <button onclick="loadFirstPage()" class="button"> Prima </button>
+        <button onclick="loadPreviousPage()" id = "prev-button" class="button"> Precedente </button>
+        <button id="page-counter" class="button"> 1 </button>
+        <button onclick="loadNextPage()" class="button"> Prossima </button>
+        <button onclick="loadLastPage()" class="button"> Ultima </button>
     </center>
 
     <div id="myModal" class="modal">
@@ -61,19 +61,19 @@
                     <tbody class="modal-body">
                         <tr>
                             <td><label>Nome</label></td>
-                            <td><input type="text" id="name"></td>
+                            <td><input type="text" id="name" class="dim-background"></td>
                         </tr>
                         <tr>
                             <td><label>Cognome</label></td>
-                            <td><input type="text" id="lastname"></td>
+                            <td><input type="text" id="lastname" class="dim-background"></td>
                         </tr>
                         <tr>
                             <td><label>Data di nascita</label></td>
-                            <td><input type="date" id="birthday"></td>
+                            <td><input type="date" id="birthday" class="dim-background"></td>
                         </tr>
                         <tr>
                             <td><label>Data di assunzione</label></td>
-                            <td><input type="date" id="hiring-date"></td>
+                            <td><input type="date" id="hiring-date" class="dim-background"></td>
                         </tr>
                         <tr class="radio-row">
                             <td><label>Sesso</label></td>
@@ -90,7 +90,7 @@
                 <br>
             </div>
         </div>
-    </div>
+    </div><br>
 
 </body>
 
