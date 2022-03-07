@@ -42,9 +42,11 @@
     </div>
     <br>
     <center>
-        <button class="button">0</button>
-        <button onclick="loadNextPage()" class="button">0</button>
-        <button onclick="loadNextPage()" class="button">0</button>
+        <button onclick="loadFirstPage()" class="paging-button"> First </button>
+        <button onclick="loadPreviousPage()" id = "prev-button" class="paging-button"> Previous </button>
+        <button class="paging-button" id="page-counter"> 1 </button>
+        <button onclick="loadNextPage()" class="paging-button"> Next </button>
+        <button onclick="loadLastPage()" class="paging-button"> Last </button>
     </center>
 
     <div id="myModal" class="modal">

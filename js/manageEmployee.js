@@ -44,18 +44,21 @@
 var nextId = 10006;*/
 
 
-$.ajax ({
-    method:"GET",
-    url:"http://localhost:8080/employees"
-})
-.done(function(msg){
-    console.log(msg['_embedded']['employees']);
-    data = msg['_embedded']['employees'];
-    updateEmployees();
-})
+var nextId;
+function updateNextId(){
+  $.get(lastPage, function(values,status){
+    nextId = values._embedded.employees[countProps(values._embedded.employees)-1].id + 1;
+  });
+}
 
-
-
+//rubato da stackoverflow
+/*function countProps(obj) {
+  var count = 0;
+  for (var p in obj) {
+    obj.hasOwnProperty(p) && count++;
+  }
+  return count; 
+} */
 
 function updateEmployees() {
     var rows = "";
@@ -83,65 +86,6 @@ function updateEmployees() {
         cls = "";
     });
     $("#to-fill").html(rows);
-}
-
-function removeEmployee(id){
-    $.each(data, function(key, value){
-      if(value.id == id){
-        data.splice(key, 1);
-        $("#" + id).closest("tr").remove(); 
-        return;
-      }
-    });
-  }
-  
-
-
-function addEmployee(name, lastname, birth, hiredate, gender) {
-
-        data.push({
-            "id": nextId,
-            "birthDate": birth,
-            "firstName": name,
-            "lastName": lastname,
-            "gender": gender,
-            "hireDate": hiredate,
-        })
-    nextId++;
-}
-
-
-function saveModalInputs() {
-    addEmployee(
-        $("#name").val().trim(),
-        $("#lastname").val().trim(),
-        $("#birthday").val(),
-        $("#hiring-date").val(),
-        $("#gender").val()
-    );
-    updateEmployees();
-}
-
-var nextPage= "https://localhost:8080/employees";
-function loadNextPage(){
-    $.get(nextPage, function(values,status){
-        console.log(values._links.next.href);
-        nextPage=values._links.next.href;
-        data=values._embedded.employees;
-        updateEmployees();
-    });
-}
-var data;
-
-$(window).on("load", function () {
-    updateEmployees();
-})
-
-function emptyModalInputs() {
-    $("#name").val("");
-    $("#lastname").val("");
-    $("#birthday").val("");
-    $("#hiring-date").val("");
 }
 
 function change(id){
@@ -172,6 +116,8 @@ function change(id){
   
     let newName = $("#input-name-"+id).val();
     let newLastname = $("#input-lastname-"+id).val();
+  
+    //cambiamenti
     if(newName == ""){
       newName = $("#name-"+id).text();
     }
@@ -189,6 +135,27 @@ function change(id){
   
     $("#input-name-"+id).val("");
     $("#input-lastname-"+id).val("");
+  
+    let payload = {
+      firstName: newName,
+      id: id,
+      lastName: newLastname,
+      birthDate: "",
+      hireDate: "",
+      gender: ""
+    };
+    console.log(id);
+    saveChanges(payload);
+  }
+  
+  function saveChanges(payload){
+    $.ajax({
+      method: "PUT",
+      url: "http://localhost:8080/employees",
+      dataType: "json",
+      contentType: "application/json",
+      data: JSON.stringify(payload)
+    });
   }
   
   function changeNames(name, lastname, id){
@@ -199,3 +166,151 @@ function change(id){
       }
     });
   }
+  
+  function removeEmployee(id){
+    $.ajax({
+      url: firstPage + "/" + id,
+      type: 'DELETE',
+      success: function(result) {
+          removeFromTable(id);
+      }
+    });
+  }
+  
+  function removeFromTable(id){
+    $.each(data, function(key, value){
+      if(value.id == id){
+        data.splice(key, 1);
+        $("#" + id).closest("tr").remove();
+        recolorRows();
+        return;
+      }
+    });
+  }
+  
+  function recolorRows(){
+    $.each(data, function(key, value){
+      if(key % 2 == 0){
+        $("#row-"+value.id).addClass("dim-background");
+      }else{
+        $("#row-"+value.id).removeClass("dim-background");
+      }
+    });
+  }
+  
+  function addEmployee(name, lastname, birth, hiredate, gender){
+    let payload = ({
+      "id": nextId,
+      "birthDate": birth,
+      "firstName": name,
+      "lastName": lastname,
+      "gender": gender,
+      "hireDate": hiredate,
+    });
+    saveEmployee(payload);
+    updateEmployees();
+  
+    nextId++;
+  }
+  
+  function saveEmployee(payload){
+    $.ajax({
+      method: "POST",
+      url: "http://localhost:8080/employees",
+      dataType: "json",
+      contentType: "application/json",
+      data: JSON.stringify(payload)
+    });
+  }
+  
+  function saveModalInputs(){
+    addEmployee(
+      $("#name").val().trim(),
+      $("#lastname").val().trim(),
+      $("#birthday").val(),
+      $("#hiring-date").val(),
+      $("#sex").val()
+    );
+    updateEmployees();
+  }
+  
+  var nextPage;
+  var previousPage;
+  var lastPage;
+  var selfPage;
+  var firstPage = "http://localhost:8080/employees";
+  
+  
+  function loadNextPage(){
+    $.get(nextPage, function(values,status){
+  
+      previousPage = selfPage;
+      selfPage = nextPage;
+      nextPage = values._links.next.href;    
+  
+      data = values._embedded.employees;
+      updatePageNumber(values.page.number);
+      updateEmployees();
+    });
+  }
+  
+  function loadPreviousPage(){
+    $.get(previousPage, function(values,status){
+  
+      nextPage = values._links.next.href;
+      selfPage = previousPage;
+  
+      previousPage = values._links.prev.href;
+  
+      data = values._embedded.employees;
+      updatePageNumber(values.page.number);
+      updateEmployees();
+    });
+  }
+
+  function loadFirstPage(){
+    $.get(firstPage, function(values,status){
+  
+      lastPage = values._links.last.href;
+      nextPage = values._links.next.href;
+      selfPage = firstPage;
+      previousPage = selfPage;
+  
+      data = values._embedded.employees;
+      updatePageNumber(values.page.number);
+      updateEmployees();
+  
+      updateNextId();
+    });
+  }
+
+  function loadLastPage(){
+    $.get(lastPage, function(values,status){
+  
+      nextPage = "";
+      previousPage = values._links.prev.href;
+      selfPage = lastPage;
+  
+      data = values._embedded.employees;
+      updatePageNumber(values.page.number);
+      updateEmployees();
+    });
+  }
+  
+  function updatePageNumber(number){
+    $("#page-counter").text(number+1);
+  }
+  
+  var data;
+  
+  $( window ).on( "load", function() {
+    loadFirstPage();
+  })
+  
+  function emptyModalInputs(){
+    $("#name").val("");
+    $("#lastname").val("");
+    $("#birthday").val("");
+    $("#hiring-date").val("");
+  }
+  
