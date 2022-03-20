@@ -20,8 +20,8 @@
                 <td>
                     <h1>Dipendenti</h1>
                 </td>
-                
-                
+
+
                 <td><button id="modal-btn" class="button">Aggiungi</button></td>
                 <td></td>
             </tr>
@@ -43,20 +43,20 @@
     <br>
     <center>
         <button onclick="loadFirstPage()" class="button"> Prima </button>
-        <button onclick="loadPreviousPage()" id = "prev-button" class="button"> Precedente </button>
+        <button onclick="loadPreviousPage()" id="prev-button" class="button"> Precedente </button>
         <button id="page-counter" class="button"> 1 </button>
         <button onclick="loadNextPage()" class="button"> Prossima </button>
         <button onclick="loadLastPage()" class="button"> Ultima </button>
     </center>
 
     <div id="myModal" class="modal">
-        <!-- Modal content -->
+
         <div class="modal-content">
             <span class="close">&times;</span>
             <div class="modal-container">
                 <h1 class="header">Inserisci dipendente</h1>
                 <br>
-                
+
                 <table class="modal-table">
                     <tbody class="modal-body">
                         <tr>
@@ -84,7 +84,7 @@
                         </tr>
                         <tr>
                         </tr>
-                        <td colspan="2" class=""radio-container><button class="modal-button" onclick="saveModalInputs(); emptyModalInputs();">&nbsp;&nbsp;Invia &gg;</button></td>
+                        <td colspan="2" class="" radio-container><button class="modal-button" onclick="saveModalInputs(); emptyModalInputs();">&nbsp;&nbsp;Invia &gg;</button></td>
                     </tbody>
                 </table>
                 <br>
@@ -99,13 +99,13 @@
     var btn = document.getElementById("modal-btn");
     var span = document.getElementsByClassName("close")[0];
 
-    btn.onclick = function () {
+    btn.onclick = function() {
         modal.style.display = "block";
     }
-    span.onclick = function () {
+    span.onclick = function() {
         modal.style.display = "none";
     }
-    window.onclick = function (event) {
+    window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = "none";
         }
